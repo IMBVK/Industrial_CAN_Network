@@ -1,59 +1,54 @@
-# Industrial CAN Network & Diagnostics Platform
+# Industrial CAN Network with Dual MCP2515
 
-An industry-oriented embedded Controller Area Network (CAN) communication and diagnostics platform developed using Arduino, MCP2515 CAN controllers, TJA1050 CAN transceivers, and Vector CANoe/CANalyzer concepts.
+A practical automotive/industrial CAN bus learning project built using an Arduino Mega 2560 and two MCP2515 CAN controller modules.
 
-The project is being developed step-by-step from CAN fundamentals toward a practical multi-node communication, diagnostics, monitoring, and automated testing platform.
+The project is being developed step-by-step to build practical knowledge of:
 
----
-
-## Project Objective
-
-The objective of this project is to build and document a practical CAN-based embedded communication system while developing the skills commonly used in automotive and industrial embedded systems.
-
-The project focuses on:
-
-- Classical CAN 2.0B
-- CAN frame structure
+- CAN bus fundamentals
+- CAN message transmission and reception
+- Multi-node CAN communication
 - CAN arbitration
 - CAN identifiers
-- CAN message transmission and reception
-- MCP2515 CAN controller
-- TJA1050 CAN transceiver
+- CAN filtering
+- CAN error handling
+- CAN diagnostics / UDS concepts
+- CAN FD concepts
+- Embedded C/C++
 - SPI communication
-- Multi-node CAN communication
-- Message filtering
-- Interrupt-driven reception
-- Periodic message scheduling
-- Heartbeat monitoring
-- Fault detection and handling
-- Diagnostics
-- CAN Transport Protocol (ISO-TP)
-- UDS concepts
-- DBC-based signal definitions
-- CANoe/CANalyzer analysis
-- CAPL-based testing concepts
-- Automated CAN testing
-- Python-based test automation
+- CAN debugging and testing
+- Python-based CAN automation
+- HIL/test concepts
+- Vector CANoe/CANalyzer concepts
+- Automotive software concepts
+- AUTOSAR awareness
+- Functional Safety awareness
+- ASPICE awareness
+
+The goal is to develop a realistic embedded/CAN project suitable for automotive and industrial embedded engineering roles.
 
 ---
 
-# Hardware
+# 1. Project Overview
 
-## Currently Available
-
-- Arduino Mega 2560
-- 3 × MCP2515 CAN controller modules
-- TJA1050 CAN transceiver interfaces integrated on the MCP2515 modules
-- Logic analyzer
-- Breadboard
-- Jumper wires
-
-## MCP2515 Configuration
-
-The MCP2515 modules used in this project have an 8 MHz oscillator.
-
-Initial CAN configuration:
+The system currently contains two independent CAN nodes:
 
 ```text
-CAN Bitrate: 500 kbit/s
-MCP2515 Oscillator: 8 MHz
+                    CAN BUS
+
+        CANH ===================== CANH
+              |                |
+              |                |
+        CANL ===================== CANL
+              |                |
+              |                |
+        +-------------+    +-------------+
+        |   NODE 1    |    |   NODE 2    |
+        |             |    |             |
+        | MCP2515 #1  |    | MCP2515 #2  |
+        +------+------+    +------+------+
+               |                  |
+               | SPI              | SPI
+               |                  |
+        +------+------------------+------+
+        |       Arduino Mega 2560        |
+        +--------------------------------+

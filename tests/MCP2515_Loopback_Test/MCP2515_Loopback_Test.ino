@@ -1,5 +1,6 @@
 #include <SPI.h>
 #include <mcp2515.h>
+#include "src/ECU_Control.h"
 
 MCP2515 mcp2515(53);
 
@@ -44,7 +45,6 @@ void setup()
 
     Serial.println("MCP2515 loopback mode enabled.");
 
-    // Create CAN frame
     canMsg.can_id  = 0x100;
     canMsg.can_dlc = 8;
 
@@ -70,7 +70,6 @@ void setup()
         while (1);
     }
 
-    // Try receiving the frame
     struct can_frame receivedMsg;
 
     if (mcp2515.readMessage(&receivedMsg) == MCP2515::ERROR_OK)
